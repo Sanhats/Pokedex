@@ -11,10 +11,7 @@ export default function Navbar() {
       name: "Search",
       route: "/search",
     },
-    {
-      name: "Compare",
-      route: "/compare",
-    },
+    
     {
       name: "Pokemon",
       route: "/pokemon",

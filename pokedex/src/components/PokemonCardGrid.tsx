@@ -1,7 +1,5 @@
 import React from "react";
-import { IoGitCompare } from "react-icons/io5";
 import { FaTrash, FaPlus } from "react-icons/fa";
-import { addToCompare, setCurrentPokemon } from "../app/slices/PokemonSlice";
 import { useAppDispatch } from "../app/hooks";
 import { removePokemonFromUserList } from "../app/reducers/removePokemonFromUserList";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -45,16 +43,7 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
                   )}
                 </div>
                 <div className="pokemon-card-compare">
-                  <IoGitCompare
-                    onClick={() => {
-                      dispatch(addToCompare(data));
-                      dispatch(
-                        setToast(
-                          `${data.name} has been added to compare queue.`
-                        )
-                      );
-                    }}
-                  />
+                 
                 </div>
                 <h3 className="pokemon-card-title">{data.name}</h3>
                 <img
@@ -64,7 +53,6 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
                   loading="lazy"
                   onClick={() => {
                     dispatch(setPokemonTab(pokemonTabs.description));
-                    dispatch(setCurrentPokemon(undefined));
                     navigate(`/pokemon/${data.id}`);
                   }}
                 />

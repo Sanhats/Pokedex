@@ -1,19 +1,20 @@
 .battle-stats {
+  font-size: 1rem;
   ul {
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 1rem;
     letter-spacing: 0.1rem;
     li {
       display: grid;
-      grid-template-columns: max-content 80%;
+      grid-template-columns: max-content 30%;
       gap: 0.5rem;
     }
   }
   position: absolute;
   bottom: 3rem;
-  right: 2rem;
+  right: -5rem;
   color: white;
   padding: 1rem;
   width: 30rem;

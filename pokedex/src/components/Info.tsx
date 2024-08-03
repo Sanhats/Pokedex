@@ -93,12 +93,7 @@ export default function Info({
             </li>
           </ul>
         }
-        <button
-          onClick={() => dispatch(addPokemonToList(data!))}
-          className="add-pokemon"
-        >
-          Add Pokemon
-        </button>
+        
       </div>
     </>
   );
