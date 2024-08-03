@@ -10,6 +10,10 @@ footer {
     svg {
       cursor: pointer;
       font-size: 2.5rem;
+      transition: 0.1s ease-in-out;
+        &:hover {
+          font-size: 2.8rem;
+        }
     }
   }
   .data {

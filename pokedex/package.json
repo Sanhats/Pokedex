@@ -12,6 +12,8 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.3",
+    "eslint": "^8.0.0",
+    "eslint-config-react-app": "^7.0.1",
     "extract-colors": "^4.0.6",
     "firebase": "^10.12.5",
     "firestore": "^1.1.6",
@@ -34,8 +36,7 @@
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "react-app"
     ]
   },
   "browserslist": {

@@ -37,8 +37,10 @@ export default function Info({
         <h3>Type: {data?.types.join(" - ")}</h3>
         <h3>Evolution: {data?.evolutionLevel}</h3>
         <button onClick={() => dispatch(setPokemonTab(pokemonTabs.evolution))}>
-          See next evolution
+          Evoluciones
         </button>
+        
+
       </div>
       <div className="stats">
         <ul>

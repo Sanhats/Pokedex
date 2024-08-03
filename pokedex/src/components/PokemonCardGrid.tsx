@@ -42,9 +42,7 @@ function PokemonCardGrid({ pokemons }: { pokemons: userPokemonsType[] }) {
                     />
                   )}
                 </div>
-                <div className="pokemon-card-compare">
-                 
-                </div>
+                
                 <h3 className="pokemon-card-title">{data.name}</h3>
                 <img
                   src={data.image}

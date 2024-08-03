@@ -3,7 +3,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { defaultImages, images, pokemonTypes } from "../../utils";
-import { generatedPokemonType, genericPokemonType } from "../../utils/types";
+import { generatedPokemonType, genericPokemonType, pokemonTypeInterface } from "../../utils/types";
 
 export const getPokemonsData = createAsyncThunk(
   "pokemon/randomPokemon",
@@ -11,19 +11,15 @@ export const getPokemonsData = createAsyncThunk(
     try {
       const pokemonsData: generatedPokemonType[] = [];
       for await (const pokemon of pokemons) {
-        const {
-          data,
-        }: {
-          data: {
-            id: number;
-            types: { type: genericPokemonType }[];
-          };
-        } = await axios.get(pokemon.url);
-        const types = data.types.map(
-          ({ type: { name } }: { type: { name: string } }) => ({
-            [name]: pokemonTypes[name],
+        const { data }: { data: { id: number; types: { type: { name: string } }[] } } = await axios.get(pokemon.url);
+        
+        const types: pokemonTypeInterface[] = data.types.map(
+          ({ type: { name } }) => ({
+            [name]: pokemonTypes[name] || { image: '', strength: [], weakness: [], resistance: [], vulnerable: [] }
           })
         );
+        
+
         let image: string = images[data.id];
         if (!image) {
           image = defaultImages[data.id];
@@ -37,6 +33,7 @@ export const getPokemonsData = createAsyncThunk(
           });
         }
       }
+      console.log(pokemonsData); // Verificar los datos en la consola
       return pokemonsData;
     } catch (err) {
       console.error(err);

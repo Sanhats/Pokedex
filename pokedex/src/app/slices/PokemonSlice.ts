@@ -74,3 +74,5 @@ export const {
   setCurrentPokemon,
   resetRandomPokemons,
 } = PokemonSlice.actions;
+
+export default PokemonSlice.reducer;
