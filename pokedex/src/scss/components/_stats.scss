@@ -35,4 +35,21 @@
       }
     }
   }
+
+  @media (max-width: 1200px) {
+    left: 6rem;
+    bottom: 7rem;
+  }
+
+  @media (max-width: 768px) {
+    left: 5rem;
+    bottom: 6rem;
+  }
+
+  @media (max-width: 480px) {
+    position: static;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1rem;
+  }
 }

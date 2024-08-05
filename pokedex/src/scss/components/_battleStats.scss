@@ -8,7 +8,6 @@
     letter-spacing: 0.1rem;
     font-weight: bold;
     li {
-      
       display: grid;
       grid-template-columns: max-content 80%;
       gap: 0.5rem;
@@ -32,11 +31,39 @@
   .name {
     margin-bottom: -15rem;
   }
-  
+
   background: linear-gradient(
-        $bg-color ($dot-space - $dot-size),
-        transparent 1%
-      )
-      center,
-    $dot-color;
+    $bg-color ($dot-space - $dot-size),
+    transparent 1%
+  ) center, $dot-color;
+
+  @media (max-width: 1200px) {
+    bottom: 3rem;
+    right: 4rem;
+    width: 30rem;
+    padding: 2.5rem;
+    &::before {
+      width: 30rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    bottom: 2.5rem;
+    right: 3rem;
+    width: 25rem;
+    padding: 2rem;
+    &::before {
+      width: 25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    position: static;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 1.5rem;
+    &::before {
+      width: 100%;
+    }
+  }
 }

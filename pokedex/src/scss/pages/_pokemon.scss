@@ -37,6 +37,62 @@
       transform: rotate(45deg);
     }
   }
+
+  @media (max-width: 1200px) {
+    .outer-circle {
+      height: 24rem;
+      width: 24rem;
+    }
+    .inner-circle {
+      height: 18rem;
+      width: 18rem;
+      img {
+        height: 22rem;
+      }
+    }
+    .lines .line {
+      height: 24rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .outer-circle {
+      height: 20rem;
+      width: 20rem;
+    }
+    .inner-circle {
+      height: 16rem;
+      width: 16rem;
+      img {
+        height: 20rem;
+      }
+    }
+    .lines .line {
+      height: 20rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: center;
+    .outer-circle {
+      height: 16rem;
+      width: 16rem;
+    }
+    .inner-circle {
+      height: 12rem;
+      width: 12rem;
+      img {
+        height: 16rem;
+      }
+    }
+    .lines {
+      gap: 2rem;
+      .line {
+        height: 16rem;
+      }
+    }
+  }
 }
 
 .circle-container-2 {
