@@ -55,6 +55,22 @@ export interface pokemonTypeInterface {
     vulnerable: string[];
   };
 }
+// src/utils/types.ts
+
+// Define la estructura de un tipo de Pokémon
+export interface PokemonType {
+  type: {
+    name: string;
+  };
+}
+
+// Define la estructura de un Pokémon genérico
+export interface genericPokemonType {
+  name: string;
+  url: string;
+  types?: PokemonType[]; // Añadir 'types' como opcional si no siempre está presente
+}
+
 
 export type pokemonStatType =
   | "vulnerable"

@@ -18,7 +18,6 @@ export const getPokemonsData = createAsyncThunk(
             [name]: pokemonTypes[name] || { image: '', strength: [], weakness: [], resistance: [], vulnerable: [] }
           })
         );
-        
 
         let image: string = images[data.id];
         if (!image) {

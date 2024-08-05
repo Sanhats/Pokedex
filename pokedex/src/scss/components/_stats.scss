@@ -1,15 +1,16 @@
 .stats {
   position: absolute;
-  left: 1rem;
+  left: 7rem;
   bottom: 8rem;
   ul {
     list-style-type: none;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    justify-content: left;
     li {
       color: white;
-      text-align: right;
+      text-align: left;
       text-transform: uppercase;
       letter-spacing: 0.1rem;
       display: flex;
@@ -17,7 +18,7 @@
       align-items: center;
       gap: 1rem;
       progress {
-        transition: 2s ease-in-out;
+        transition: 4s ease-in-out;
         width: 0;
         height: 100%;
         -webkit-appearance: none;

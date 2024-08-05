@@ -36,7 +36,19 @@ const Rock = "rock";
 const Steel = "steel";
 const Water = "water";
 
-export const pokemonTypes = {
+interface PokemonType {
+  image: string;
+  strength: string[];
+  weakness: string[];
+  resistance: string[];
+  vulnerable: string[];
+}
+
+interface PokemonTypes {
+  [key: string]: PokemonType;
+}
+
+export const pokemonTypes: PokemonTypes = {
   bug: {
     image: bug,
     strength: [Grass, Psychic, Dark],

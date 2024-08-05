@@ -9,12 +9,13 @@ import {
 } from "../../utils/types";
 
 const initialState: PokemonInitialStateType = {
-  allPokemon: undefined,
+  allPokemon: [],  
   randomPokemons: undefined,
   compareQueue: [],
   userPokemons: [],
   currentPokemon: undefined,
 };
+
 
 export const PokemonSlice = createSlice({
   name: "pokemon",

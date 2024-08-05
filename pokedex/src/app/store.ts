@@ -6,6 +6,7 @@ export const store = configureStore({
     pokemon: PokemonSlice.reducer,
     app: AppSlice.reducer,
   },
+  
 });
 
 export type AppDispatch = typeof store.dispatch;

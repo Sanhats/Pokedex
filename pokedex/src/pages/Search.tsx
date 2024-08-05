@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import React, { useEffect, useState } from "react";
 import Wrapper from "../sections/Wrapper";
 import { debounce } from "../utils";
@@ -12,7 +10,7 @@ import PokemonCardGrid from "../components/PokemonCardGrid";
 
 function Search() {
   const [searchType, setSearchType] = useState("name");
-  const handleChange = debounce((value: string) => getPokemon(value), 300);
+  const [searchValue, setSearchValue] = useState("");
   const isLoading = useAppSelector(({ app: { isLoading } }) => isLoading);
 
   const dispatch = useAppDispatch();
@@ -40,27 +38,36 @@ function Search() {
       dispatch(setLoading(false));
     }
   }, [randomPokemons, dispatch]);
-  
+
+  const fetchPokemonByType = async (type: string) => {
+    try {
+      const response = await fetch(`https://pokeapi.co/api/v2/type/${type}`);
+      const data = await response.json();
+      const pokemonList = data.pokemon.map((p: any) => p.pokemon);
+      return pokemonList;
+    } catch (error) {
+      console.error("Error fetching Pokémon by type:", error);
+      return [];
+    }
+  };
 
   const getPokemon = async (value: string) => {
-    if (value.length) {
-      let pokemons;
+    setSearchValue(value);
+    if (allPokemon && value.length) {
+      let pokemons: any[] = [];
       if (searchType === "name") {
         pokemons = allPokemon.filter((pokemon) =>
-          pokemon.name.includes(value.toLowerCase())
+          pokemon.name && pokemon.name.toLowerCase().includes(value.toLowerCase())
         );
       } else if (searchType === "type") {
-        pokemons = allPokemon.filter(
-          (pokemon) =>
-            pokemon.types &&
-            pokemon.types.some((type) =>
-              type.type.name.includes(value.toLowerCase())
-            )
+        const typePokemons = await fetchPokemonByType(value.toLowerCase());
+        pokemons = allPokemon.filter((pokemon) =>
+          typePokemons.some((typePokemon: any) => typePokemon.name === pokemon.name)
         );
       }
       console.log("Filtered Pokemons:", pokemons); // Verificar el resultado del filtrado
       dispatch(getPokemonsData(pokemons));
-    } else {
+    } else if (allPokemon) {
       const clonedPokemons = [...allPokemon];
       const randomPokemonsId = clonedPokemons
         .sort(() => Math.random() - Math.random())
@@ -68,8 +75,8 @@ function Search() {
       dispatch(getPokemonsData(randomPokemonsId));
     }
   };
-  
-  
+
+  const handleChange = debounce((value: string) => getPokemon(value), 300);
 
   return (
     <>
@@ -78,15 +85,23 @@ function Search() {
       ) : (
         <div className="search">
           <div className="search-options">
-            
             <input
               type="text"
               onChange={(e) => handleChange(e.target.value)}
               className="pokemon-searchbar"
-              placeholder={`Search Pokemon by ${searchType}`}
+              placeholder="Buscar Pokemon por..."
+              value={searchValue}
             />
+            <select
+              value={searchType}
+              onChange={(e) => setSearchType(e.target.value)}
+              className="search-type-selector"
+            >
+              <option value="name">Nombre</option>
+              <option value="type">Tipo</option>
+            </select>
           </div>
-          <PokemonCardGrid pokemons={randomPokemons} />
+          <PokemonCardGrid pokemons={randomPokemons || []} />
         </div>
       )}
     </>

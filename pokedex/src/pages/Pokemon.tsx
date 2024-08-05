@@ -76,52 +76,60 @@ function Pokemon() {
   const [isDataLoading, setIsDataLoading] = useState(true);
   const getPokemonInfo = useCallback(
     async (image) => {
-      const { data } = await axios.get(`${pokemonRoute}/${params.id}`);
-      const { data: dataEncounters } = await axios.get(
-        data.location_area_encounters
-      );
-
-      const {
-        data: {
-          evolution_chain: { url: evolutionURL },
-        },
-      } = await axios.get(`${pokemonSpeciesRoute}/${data.id}`);
-      const { data: evolutionData } = await axios.get(evolutionURL);
-
-      const pokemonAbilities = {
-        abilities: data.abilities.map(({ ability }) => ability.name),
-        moves: data.moves.map(({ move }) => move.name),
-      };
-
-      const encounters = [];
-      const evolution = getEvolutionData(evolutionData.chain);
-      let evolutionLevel;
-      evolutionLevel = evolution.find(
-        ({ pokemon }) => pokemon.name === data.name
-      ).level;
-      dataEncounters.forEach((encounter) => {
-        encounters.push(
-          encounter.location_area.name.toUpperCase().split("-").join(" ")
+      try {
+        const { data } = await axios.get(`${pokemonRoute}/${params.id}`);
+        console.log('Datos del Pokémon:', data);
+  
+        const { data: dataEncounters } = await axios.get(data.location_area_encounters);
+        console.log('Datos de encuentros:', dataEncounters);
+  
+        const { data: { evolution_chain: { url: evolutionURL } } } = await axios.get(`${pokemonSpeciesRoute}/${data.id}`);
+        const { data: evolutionData } = await axios.get(evolutionURL);
+        console.log('Datos de evolución:', evolutionData);
+  
+        const pokemonAbilities = {
+          abilities: data.abilities.map(({ ability }) => ability.name),
+          moves: data.moves.map(({ move }) => move.name),
+        };
+  
+        const encounters = [];
+        const evolution = getEvolutionData(evolutionData.chain);
+  
+        let evolutionLevel;
+        const evolutionDataFound = evolution.find(({ pokemon }) => pokemon.name === data.name);
+        if (evolutionDataFound) {
+          evolutionLevel = evolutionDataFound.level;
+        } else {
+          console.warn('Evolución no encontrada para el Pokémon:', data.name);
+          evolutionLevel = 'unknown'; // o cualquier valor por defecto que prefieras
+        }
+  
+        dataEncounters.forEach((encounter) => {
+          encounters.push(encounter.location_area.name.toUpperCase().split("-").join(" "));
+        });
+  
+        const stats = data.stats.map(({ stat, base_stat }) => ({
+          name: stat.name,
+          value: base_stat,
+        }));
+  
+        dispatch(
+          setCurrentPokemon({
+            id: data.id,
+            name: data.name,
+            types: data.types.map(({ type: { name } }) => name),
+            image,
+            stats,
+            encounters,
+            evolutionLevel,
+            evolution,
+            pokemonAbilities,
+          })
         );
-      });
-      const stats = await data.stats.map(({ stat, base_stat }) => ({
-        name: stat.name,
-        value: base_stat,
-      }));
-      dispatch(
-        setCurrentPokemon({
-          id: data.id,
-          name: data.name,
-          types: data.types.map(({ type: { name } }) => name),
-          image,
-          stats,
-          encounters,
-          evolutionLevel,
-          evolution,
-          pokemonAbilities,
-        })
-      );
-      setIsDataLoading(false);
+        setIsDataLoading(false);
+      } catch (error) {
+        console.error('Error al obtener la información del Pokémon:', error);
+      }
     },
     [params.id, dispatch, getEvolutionData]
   );
